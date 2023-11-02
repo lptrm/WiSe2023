@@ -1,5 +1,10 @@
 package cryptographics.aes_problems;
-
+/*
+ * Generate the multiplication table for the extension field GF(23 ) for the case
+ * that the irreducible polynomial is P(x) = x 3 + x + 1. The multiplication table is in
+ * this case a 8 × 8 table. (Remark: You can do this manually or write a program for
+ * it.)
+ */
 public class Problem_4_3 {
   int[][] multiplicationTable = new int[8][8];
   int irreduciblePolynomial = 0b000001011;
@@ -13,16 +18,16 @@ public class Problem_4_3 {
   }
 
   public int multiply(int a, int b) {
-    int result = 0;
+    int result = 0; // Initialize resulting bits
     while (b != 0) {
-      if ((b & 1) != 0) {
-        result ^= a;
+      if ((b & 1) != 0) { // if the least significant bit is set
+        result ^= a; // add the current a to the result, because we have to multiply a by 1
       }
-      a <<= 1;
-      if ((a & 0b1000) != 0) {
-        a ^= irreduciblePolynomial;
+      a <<= 1; // shift a to the left by 1, because we have to multiply a by x
+      if ((a & 0b1000) != 0) { // if a doesnt fit into the field anymore
+        a ^= irreduciblePolynomial; // reduce a by the irreducible polynomial
       }
-      b >>= 1;
+      b >>= 1;  // shift b to the right by 1, because we have to divide b by x
     }
     return result;
   }
